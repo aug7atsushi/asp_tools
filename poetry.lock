@@ -3891,6 +3891,23 @@ MarkupSafe = ">=2.1.1"
 watchdog = ["watchdog (>=2.3)"]
 
 [[package]]
+name = "xvector-jtubespeech"
+version = "0.0.2"
+description = "Pre-trained model for extracting the x-vector (speaker representation vector)"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "xvector_jtubespeech-0.0.2-py3-none-any.whl", hash = "sha256:a3cf90ffe4e434995e1a8000f6a2c10ad6f67b748887a2736d9bf018d62ff853"},
+    {file = "xvector_jtubespeech-0.0.2.tar.gz", hash = "sha256:8b76fd5b701056b21658741ba71e92abc47fe4416431a7e0e7ffddfcfa32f364"},
+]
+
+[package.dependencies]
+numpy = ">=1.22.3"
+scipy = ">=1.8.0"
+torch = ">=1.10.2"
+torchaudio = ">=0.10.2"
+
+[[package]]
 name = "zipp"
 version = "3.16.2"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -3908,4 +3925,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "ea6ef021424acc98deca712ec73454afc430a292688dbaf9d296c36c767e756b"
+content-hash = "8f7a6df3f35792c8cab16421399e2c3d818d77257086c2a6a49ca35c3a33d6aa"
