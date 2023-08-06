@@ -1,0 +1,33 @@
+name: conv_tasnet_training
+jobs:
+  data:
+    sampling_rate: 16000
+    wav_root_path: /Users/atsushi/Documents/Workspace/Github/asp_tools/data/LibriSpeech/
+    json_train_path: /Users/atsushi/Documents/Workspace/Github/asp_tools/data/LibriSpeech/settings/dev-clean/valid-2mix.json
+    json_valid_path: /Users/atsushi/Documents/Workspace/Github/asp_tools/data/LibriSpeech/settings/dev-clean/valid-2mix.json
+
+
+  model:
+    name: conv_tasnet
+    params:
+      task: "train"
+
+  training:
+    n_sources: 2
+    n_epoch: 100
+    n_batch: 16
+    lr: 1e-4
+    num_workers: 0
+    pin_memory: False
+
+    optim:
+      name: Adam
+      params:  # 最適化アルゴリズムに応じて項目を追加したり減らしたりする
+        lr: 1e-4  # 学習率
+        # betas: [0.9, 0.98]
+        # eps: 1e-08
+        weight_decay: 0
+    use_cuda: False
+    overwrite: True
+    max_norm: True
+    model_path: /tmp/model.pth
