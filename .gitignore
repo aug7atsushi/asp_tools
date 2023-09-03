@@ -57,6 +57,8 @@ cover/
 
 # my dir
 data/
+outputs/
+.vscode
 
 # Translations
 *.mo

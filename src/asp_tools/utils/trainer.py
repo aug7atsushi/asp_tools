@@ -1,6 +1,5 @@
 import os
 import time
-from abc import ABC, abstractmethod
 
 import mlflow
 import torch
@@ -9,7 +8,7 @@ import torchaudio
 from omegaconf import DictConfig
 from pydantic import BaseModel
 
-from asp_tools.models.basetrainers import BaseTrainer
+from asp_tools.utils.basetrainers import BaseTrainer
 from asp_tools.utils.logging import get_module_logger
 
 logger = get_module_logger(__name__)
@@ -51,7 +50,7 @@ class Trainer(BaseTrainer):
 
         if os.path.exists(self.best_model_path):
             if cfg.jobs.training.overwrite:
-                print("Overwrite models.")
+                logger.info("Overwrite models.")
             else:
                 raise ValueError(f"{self.best_model_path} already exists.")
 
@@ -115,13 +114,13 @@ class Trainer(BaseTrainer):
         train_loss = 0
         n_train_batch = len(self.train_loader)
 
-        for idx, mixture, sources in enumerate(self.train_loader):
+        for idx, (mixture, sources) in enumerate(self.train_loader):
             if self.use_cuda:
                 mixture = mixture.cuda()
                 sources = sources.cuda()
 
             estimated_sources = self.model(mixture)
-            loss = self.criterion(estimated_sources, sources)
+            loss, _ = self.criterion(estimated_sources, sources)
 
             self.optimizer.zero_grad()
             loss.backward()
@@ -133,7 +132,7 @@ class Trainer(BaseTrainer):
 
             train_loss += loss.item()
 
-            if (idx + 1) % 100 == 0:
+            if (idx + 1) % 1 == 0:
                 print(
                     f"[Epoch {epoch + 1}/{self.n_epoch}] iter {idx + 1}/{n_train_batch} loss: {loss.item()}"
                 )

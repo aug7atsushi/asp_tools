@@ -10,7 +10,26 @@ jobs:
   model:
     name: conv_tasnet
     params:
-      task: "train"
+      task: train
+      n_basis: 8
+      kernel_size: 16
+      stride: # None
+      enc_basis: trainable
+      dec_basis: trainable
+      enc_nonlinear: # None
+      sep_hidden_channels: 128
+      sep_bottleneck_channels: 128
+      sep_skip_channels: 128
+      sep_kernel_size: 3
+      sep_num_blocks: 3
+      sep_num_layers: 8
+      dilated: True
+      separable: True
+      sep_nonlinear: prelu
+      sep_norm: True
+      mask_nonlinear: sigmoid
+      causal: True
+      n_sources: 2
 
   training:
     n_sources: 2
@@ -19,15 +38,19 @@ jobs:
     lr: 1e-4
     num_workers: 0
     pin_memory: False
-
-    optim:
-      name: Adam
-      params:  # 最適化アルゴリズムに応じて項目を追加したり減らしたりする
-        lr: 1e-4  # 学習率
-        # betas: [0.9, 0.98]
-        # eps: 1e-08
-        weight_decay: 0
     use_cuda: False
     overwrite: True
     max_norm: True
-    model_path: /tmp/model.pth
+    last_model_path: /tmp/model.pth
+    best_model_path: /tmp/best_model.pth
+
+  optim:
+    name: Adam
+    params:
+      lr: 1e-4
+      # betas: [0.9, 0.98]
+      # eps: 1e-08
+      weight_decay: 0
+
+  criterion:
+    name: sisdr
